@@ -59,13 +59,13 @@ function show_chosen_pokemon() {
 function stopRoulette() {
     var button = document.getElementById("randomizer-button");
     console.log(button.value);
-    if (button.value == "Stop"){
+    if (button.value == "Stop Pokemon Randomization"){
         active = false;
-        button.value = "Start";
+        button.value = "Start Pokemon Randomization";
         setTimeout(show_chosen_pokemon,300)
-    } else if (button.value == "Start"){
+    } else if (button.value == "Start Pokemon Randomization"){
         active = true;
-        button.value = "Stop";
+        button.value = "Stop Pokemon Randomization";
         draw_image();
     }
 }

@@ -11,15 +11,15 @@
     <title>My Pokemon Team</title>
   </head>
 
-  <body id="vue-js-app" class="w3-content" style="max-width:1000px">
+  <body id="vue-js-app" class="w3-content">
     <header>
       <h1>My Pokemon Team</h1>
     </header>
 
     <nav class="w3-bar">
-      <a href="#information" class="w3-border w3-round-xlarge w3-blue w3-bar-item w3-mobile">How to Use</a>
-      <a href="#form" class="w3-blue w3-border w3-round-xlarge w3-bar-item w3-mobile">Add a Pokemon</a>
-      <a href="#pokemonTeam" class="w3-border w3-round-xlarge w3-blue w3-bar-item w3-mobile">Pokemon Team</a>
+      <a href="#information" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">How to Use</a>
+      <a href="#form" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Add a Pokemon</a>
+      <a href="#pokemonTeam" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Pokemon Team</a>
     </nav>
 
     <section id="information" class="w3-container">
@@ -33,10 +33,10 @@
       <h2>Add a Pokemon to your Team</h2>
       <section class="w3-container w3-section">
         <h3>Fill form with a random pokemon</h3>
-        <div class="w3-content" style="max-width:296px">
-        <canvas id="randomizer" width="296" height="196" style="border:1px solid #000000;"></canvas>
+        <div id="randomizer-box" class="w3-content">
+        <canvas id="randomizer" width="296" height="196"></canvas>
       </div>
-        <input name="start-stop-button" type="button" id="randomizer-button" class="w3-input w3-btn w3-round-xlarge w3-blue w3-margin-bottom" onclick="stopRoulette()" value="Start">
+        <input name="toggle-pokemon-randomization" type="button" id="randomizer-button" class="w3-input w3-btn w3-round-xlarge w3-blue w3-margin-bottom" onclick="stopRoulette()" value="Start Pokemon Randomization">
       </section>
       <section class="w3-halve w3-container w3-section">
         <h3>Fill out with your Pokemon's Information</h3>
@@ -45,13 +45,13 @@
 
           <div class="w3-half w3-container w3-section">
             <label for="name">Name:</label>
-            <span id="name-error" hidden style="color:red">Valid Pokemon Name Required</span>
+            <span id="name-error" class="w3-red" hidden>Valid Pokemon Name Required</span>
             <input class="w3-input w3-round-large" type="text" id="name" name="name" oninput="validateName()" required>
           </div>
 
           <div class="w3-half w3-container w3-section">
             <label for="level">Level:</label>
-            <span id="level-error" hidden style="color:red">Valid Pokemon Level Required</span>
+            <span id="level-error" hidden class="w3-red">Valid Pokemon Level Required</span>
             <input class="w3-input w3-round-large" type="number" id="level" name="level" min="1" max="100" step="1" oninput="validateLevel()" required>
           </div>
 
