@@ -1,3 +1,5 @@
+var counter = 0;
+
 function showError() {
   level = document.getElementById("level");
   levelError = document.getElementById("level-error")
@@ -23,7 +25,7 @@ function validateLevel() {
   }
 }
 
-function loadGivenPokemon() {
+async function loadGivenPokemon(localCounter) {
   input = document.getElementById("name")
   inputError = document.getElementById("name-error")
   type1 = document.getElementById("type1")
@@ -32,29 +34,29 @@ function loadGivenPokemon() {
   console.log(input.value)
   var url = 'https://pokeapi.co/api/v2/pokemon/' + input.value.toLowerCase();
 
-  fetch(url)
-    .then(response => {
-      console.log(response)
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error: ' + response.status);
-      }
-    })
-    .then(data => {
+  const response = await fetch(url)
+  console.log(response)
+  if (response.ok && localCounter == counter) {
+    const data = await response.json();
     input.style.backgroundColor = "green";
     pokemon_id.value = data.id
     type1.value = data.types[0].type.name
-    if(data.types.length > 1){ type2.value = data.types[1].type.name } else {type2.value = "none"}
+    if (data.types.length > 1){ type2.value = data.types[1].type.name } else {type2.value = "none"}
     input.setCustomValidity("");
     inputError.hidden = true
-    })
-    .catch(error => {
-      input.style.backgroundColor = "red";
-      input.setCustomValidity("This Pokemon does not exist");
-    });
+  } else if (localCounter == counter) {
+    input.style.backgroundColor = "red";
+    input.setCustomValidity("This Pokemon does not exist");
+  }
 }
 
 function validateName() {
-  setTimeout(loadGivenPokemon,500)
+  input = document.getElementById("name")
+  if (input.value == ""){
+    input.setCustomValidity("Pokemon name must not be empty");
+  } else{
+ counter++;
+  var localCounter = counter
+  loadGivenPokemon(localCounter)
+  }
 }

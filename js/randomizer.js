@@ -3,25 +3,16 @@ var random_pokemon=Math.floor(Math.random() * 1009);
 var random_x=Math.floor(Math.random() * 201);
 var random_y=Math.floor(Math.random() * 101);
 
-function get_name() {
+async function get_name() {
     var url = 'https://pokeapi.co/api/v2/pokemon/' + random_pokemon;
 
-  fetch(url)
-    .then(response => {
-      console.log(response)
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error: ' + response.status);
-      }
-    })
-    .then(data => {
-        var input = document.getElementById("name");
-        input.value = data.name;
-    })
-    .catch(error => {
-      input.style.backgroundColor = "red";
-    });
+    const response = await fetch(url)
+    if (response.ok) {
+      const data = await response.json()
+      var input = document.getElementById("name")
+      input.value = data.name
+      validateName()
+    }
 }
 
 function show_chosen_pokemon() {
@@ -50,10 +41,9 @@ function show_chosen_pokemon() {
 
         image.onload = function(){
             painter.drawImage(image, random_x, random_y);
+            get_name();  
         }
         image.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + random_pokemon + '.png';
-        get_name();
-        validateName();
 }
 
 function stopRoulette() {
@@ -62,7 +52,7 @@ function stopRoulette() {
     if (button.value == "Stop Pokemon Randomization"){
         active = false;
         button.value = "Start Pokemon Randomization";
-        setTimeout(show_chosen_pokemon,300)
+        show_chosen_pokemon()
     } else if (button.value == "Start Pokemon Randomization"){
         active = true;
         button.value = "Stop Pokemon Randomization";
@@ -79,9 +69,11 @@ function draw_image() {
     var painter = canvas.getContext("2d");
     var image = new Image;
 
-    image.onload = function(){
+    image.onload = async function(){
         painter.drawImage(image, random_x, random_y);
+        const waitPromise = new Promise((resolve) => { setTimeout(() => {resolve()}, 100); })
+        await waitPromise
+        if(active){draw_image()}
     }
     image.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + random_pokemon + '.png';
-    if(active){setTimeout(draw_image,100)}
 }
