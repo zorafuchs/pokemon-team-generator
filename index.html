@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="css/application.css">
+    <script src=" https://cdn.jsdelivr.net/npm/vue@3.2.31"></script>
+    <script src="js/validation.js"></script>
+    <title>My Pokemon Team</title>
+  </head>
+
+  <body id="vue-js-app" class="w3-container">
+    <header>
+      <h1>My Pokemon Team</h1>
+    </header>
+
+    <nav>
+      <a href="#information" class="w3-bar-item w3-round-xlarge ">How to Use</a>
+      <a href="#form" class="w3-bar-item w3-round-xlarge ">Add a Pokemon</a>
+      <a href="#pokemonTeam" class="w3-bar-item w3-round-xlarge ">Pokemon Team</a>
+    </nav>
+
+    <section id="information" class="w3-container">
+      <img id="information_image" class="w3-image" src="https://secure.static.tumblr.com/0e3b2e30312ca426d8a8f29a99e01aeb/ge4upkh/HMcmzna1m/tumblr_static_tumblr_static_tumblr_static_pokemon_banner.png" alt="Image for decoration. Showing some cute forms of famous pokemons">
+      <h2>How to Use</h2>
+      <p>On this website, you can assamble your pokemon team. Fill out the form by typing the name of an existing Pokemon. If the pokemon does exists, the types are filled in automatically. You can also set the level of your pokemon.</p>
+      <p>Alternatively you can generate a random Pokemon for your team. You still have to define its level by hand though.</p>
+    </section>
+
+    <section id="form" class="w3-container w3-section">
+      <h2>Add a Pokemon to your Team</h2>
+      <section class="w3-container w3-section">
+        <h3>Fill form with a random pokemon</h3>
+        <canvas id="randomizer" width="296" height="196" style="border:1px solid #000000;"></canvas>
+        <input name="start-stop-button" type="button" id="randomizer-button" class="w3-input w3-btn w3-round-xlarge w3-blue w3-margin-bottom" onclick="stopRoulette()" value="Start">
+      </section>
+      <section class="w3-container w3-section">
+        <h3>Fill out with your Pokemon's Information</h3>
+        <form action="server.php" method="POST" class="w3-container w3-light-grey">
+          <input type="hidden" id="pokemon_id" name="pokemon_id">
+
+          <div class="w3-container w3-section">
+            <label for="name">Name:</label>
+            <input class="w3-input w3-round-large" type="text" id="name" name="name" oninput="validateName()" required>
+          </div>
+
+          <div class="w3-container w3-section">
+            <label for="type1">Typ 1:</label>
+            <select class="w3-input w3-round-large" name="type1" id="type1" required>
+              <option v-for="type in pokemonTypes">{{ type }}</option>
+            </select>
+          </div>
+
+          <div class="w3-container w3-section">
+            <label for="type2">Typ 2:</label>
+            <select class="w3-input w3-round-large" name="type2" id="type2" required>
+              <option>none</option>
+              <option v-for="type in pokemonTypes">{{ type }}</option>
+            </select>
+          </div>
+
+          <div class="w3-container w3-section">
+            <label for="level">Level:</label>
+            <input class="w3-input w3-round-large" type="number" id="level" name="level" min="1" max="100" step="1" required>
+          </div>
+          <div class="w3-container w3-section">
+            <input name="send" class="w3-input w3-btn w3-round-xlarge w3-blue" type="submit" value="Absenden">
+          </div>
+        </form>
+      </section>
+    </section>
+
+    <section id="pokemonTeam" class="w3-container">
+      <h2>Your Pokemon Team</h2>
+      <article class="w3-quarter w3-panel w3-border w3-round-xxlarge w3-blue w3-cell w3-mobile" v-for="pokemon in pokemons">
+        <img :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.pokemon_id + '.png'" :alt="'Picture of ' + pokemon.name">
+        <h4>{{ pokemon.name }}</h4>
+        <p>Level: {{ pokemon.level }}</p>
+        <p>Types: {{ pokemon.type1 }}, {{ pokemon.type2 }}</p>
+      </article>
+    </section>
+    <script src="js/application.js"></script>
+    <script src="js/randomizer.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  a {
+    background-color: #1E90FF;
+    border: 5px solid;
+    color: #fff;
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.7s ease-out;
+  }
+  
+  a:hover,
+  a:focus {
+    background-color: #fff;
+    color: #1E90FF;
+  }
