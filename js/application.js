@@ -1,19 +1,20 @@
-const pokemonTypes1 = [
+const pokemonTypes = [
     "normal", "fire", "water", "electric", "grass", "ice", "fighting", 
     "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", 
     "dragon", "dark", "steel", "fairy"
 ]
 
-const pokemon_cookie = decodeURIComponent(document.cookie
-        .split('; ')
-        .find(row => row.startsWith('pokemon_team=')));
-const pokemon_cookie_value = pokemon_cookie ? pokemon_cookie.split('=')[1] : "";
-const pokemons1 = pokemon_cookie_value ? JSON.parse("[" + pokemon_cookie_value + "]") : [];
+function getPokemonFromCookie() {
+    const pokemonCookie = decodeURIComponent(document.cookie.split('; ').find(row => row.startsWith('pokemon_team=')));
+    const pokemonCookieValue = pokemonCookie ? pokemonCookie.split('=')[1] : "";
+    return pokemonCookieValue ? JSON.parse("[" + pokemonCookieValue + "]") : [];
+}
+
 Vue.createApp({
     data() {
         return {
-            pokemonTypes: pokemonTypes1,
-            pokemons: pokemons1
+            pokemonTypes: pokemonTypes,
+            pokemons: getPokemonFromCookie()
         }
     }
 }).mount('#vue-js-app');
