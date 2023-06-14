@@ -32,7 +32,8 @@
                 }
 
                 public function set_name($name) {
-                    if (strlen($name > 3)) {
+                    $response = file_get_contents('https://pokeapi.co/api/v2/pokemon/'.strtolower($name));
+                    if ($response) {
                         $this->name = $name;
                         return true;
                     } else {
@@ -62,7 +63,7 @@
                 }
 
                 public function set_level($level) {
-                    if (is_numeric($level)) {
+                    if (is_numeric($level) && $level > 0 && $level < 101) {
                         $this->level = $level;
                         return true;
                     } else {

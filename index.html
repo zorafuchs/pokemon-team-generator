@@ -45,12 +45,14 @@
 
           <div class="w3-half w3-container w3-section">
             <label for="name">Name:</label>
+            <span id="name-error" hidden style="color:red">Valid Pokemon Name Required</span>
             <input class="w3-input w3-round-large" type="text" id="name" name="name" oninput="validateName()" required>
           </div>
 
           <div class="w3-half w3-container w3-section">
             <label for="level">Level:</label>
-            <input class="w3-input w3-round-large" type="number" id="level" name="level" min="1" max="100" step="1" required>
+            <span id="level-error" hidden style="color:red">Valid Pokemon Level Required</span>
+            <input class="w3-input w3-round-large" type="number" id="level" name="level" min="1" max="100" step="1" oninput="validateLevel()" required>
           </div>
 
           <div class="w3-half w3-container w3-section">
@@ -69,7 +71,7 @@
           </div>
 
           <div class="w3-container w3-section">
-            <input name="send" class="w3-input w3-btn w3-round-xlarge w3-blue" type="submit" value="Absenden">
+            <input onclick="showError()" name="send" class="w3-input w3-btn w3-round-xlarge w3-blue" type="submit" value="Absenden">
           </div>
         </form>
       </section>
