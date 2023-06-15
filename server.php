@@ -22,8 +22,8 @@
           public $left_till_full_level;
 
           public function print_pokemon() {
-            echo '<article class="w3-quarter w3-panel w3-border w3-round-xxlarge w3-blue w3-cell w3-mobile">';
-            echo "<p><strong>$this->name</strong></p>";
+            echo '<article class="w3-panel w3-border w3-round-xxlarge w3-blue w3-cell w3-mobile">';
+            echo "<p><strong>$this->name</strong> with ID $this->pokemon_id</p>";
             echo "<p>Level: $this->level</p>";
             echo "<p>Types: $this->type1, $this->type2</p>";
             echo "</article>";
