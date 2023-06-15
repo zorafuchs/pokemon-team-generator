@@ -10,11 +10,11 @@ body {
   background-color: #1E90FF;
   color: white;
   text-decoration: none;
-  transition: all 1.5s ease-out;
+  transition: all 1.5s ease-out
 }
 
 .w3-bar-item:hover,
 .w3-bar-item:focus {
   background-color: white;
-  color: #1E90FF;
+  color: #1E90FF
 }

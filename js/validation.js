@@ -37,7 +37,12 @@ async function fillFormWithValidPokemonData(pokemonJSON) {
   pokemonNameInput.style.backgroundColor = "green"
   pokemonIdInput.value = pokemonJSON.id
   pokemonType1Dropdown.value = pokemonJSON.types[0].type.name
-  if (pokemonJSON.types.length > 1) { pokemonType2Dropdown.value = pokemonJSON.types[1].type.name } else { pokemonType2Dropdown.value = "none" }
+  if (pokemonJSON.types.length > 1) { 
+    pokemonType2Dropdown.value = pokemonJSON.types[1].type.name 
+  } else { 
+    pokemonType2Dropdown.value = "none" 
+  }
+  
   pokemonNameInput.setCustomValidity("")
   pokemonNameError.hidden = true
 }
