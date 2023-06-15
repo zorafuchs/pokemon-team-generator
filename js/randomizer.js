@@ -4,20 +4,27 @@ var randomX = Math.floor(Math.random() * 201)
 var randomY = Math.floor(Math.random() * 101)
 
 async function fillFormWithName() {
-  var url = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemonId
+  const url = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemonId
+  const pokemonNameInput = document.getElementById("name")
 
   const pokeApiResponse = await fetch(url)
   if (pokeApiResponse.ok) {
     const pokemonData = await pokeApiResponse.json()
-    var pokemonNameInput = document.getElementById("name")
     pokemonNameInput.value = pokemonData.name
     validatePokemonName()
   }
 }
 
 function showChosenPokemon() {
-  var randomizerCanvas = document.getElementById("randomizer")
-  var randomizerCanvasPainter = randomizerCanvas.getContext("2d")
+  const randomizerCanvas = document.getElementById("randomizer")
+  const randomizerCanvasPainter = randomizerCanvas.getContext("2d")
+
+  const chosenPokemonImage = new Image;
+  chosenPokemonImage.onload = function(){
+    randomizerCanvasPainter.drawImage(chosenPokemonImage, randomX, randomY)
+    fillFormWithName()
+  }
+  chosenPokemonImage.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + randomPokemonId + '.png'
 
   randomizerCanvasPainter.strokeStyle = "red"
   randomizerCanvasPainter.clearRect(0, 0, 296, 196)
@@ -37,44 +44,35 @@ function showChosenPokemon() {
   randomizerCanvasPainter.moveTo(randomX, randomY+96)
   randomizerCanvasPainter.lineTo(randomX, randomY)
   randomizerCanvasPainter.stroke()
-
-  var chosenPokemonImage = new Image;
-
-  chosenPokemonImage.onload = function(){
-    randomizerCanvasPainter.drawImage(chosenPokemonImage, randomX, randomY)
-    fillFormWithName()
-  }
-  chosenPokemonImage.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + randomPokemonId + '.png'
 }
 
 function drawPokemonImage() {
-  randomPokemonId = Math.floor(Math.random() * 1009)
-  randomX=Math.floor(Math.random() * 201)
-  randomY=Math.floor(Math.random() * 101)
-
-  var randomizerCanvas = document.getElementById("randomizer")
-  var randomizerCanvasPainter = randomizerCanvas.getContext("2d")
-  var pokemonImage = new Image;
+  const randomizerCanvas = document.getElementById("randomizer")
+  const randomizerCanvasPainter = randomizerCanvas.getContext("2d")
+  const pokemonImage = new Image;
 
   pokemonImage.onload = async function(){
     randomizerCanvasPainter.drawImage(pokemonImage, randomX, randomY)
     const waitPromise = new Promise((resolve) => { setTimeout(() => {resolve()}, 100) })
     await waitPromise
+    randomPokemonId = Math.floor(Math.random() * 1009)
+    randomX = Math.floor(Math.random() * 201)
+    randomY = Math.floor(Math.random() * 101)
     if(active) { drawPokemonImage() }
   }
   pokemonImage.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + randomPokemonId + '.png'
 }
 
-function stopRoulette() {
-  var button = document.getElementById("randomizer-button")
-  console.log(button.value)
-  if (button.value == "Stop Pokemon Randomization"){
+function toggleRandomizerCanvas() {
+  const toggleRandomizerButton = document.getElementById("randomizer-button")
+
+  if (toggleRandomizerButton.value == "Stop Pokemon Randomization"){
     active = false
-    button.value = "Start Pokemon Randomization"
+    toggleRandomizerButton.value = "Start Pokemon Randomization"
     showChosenPokemon()
-  } else if (button.value == "Start Pokemon Randomization"){
+  } else if (toggleRandomizerButton.value == "Start Pokemon Randomization"){
     active = true
-    button.value = "Stop Pokemon Randomization"
+    toggleRandomizerButton.value = "Stop Pokemon Randomization"
     drawPokemonImage()
   }
 }
