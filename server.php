@@ -15,14 +15,13 @@
 
             class Pokemon
             {
-                // property declaration
                 public $name;
                 public $type1;
                 public $type2;
                 public $level;
                 public $pokemon_id;
+                public $left_till_full_level;
 
-                // method declaration
                 public function print_pokemon() {
                     echo '<article class="w3-quarter w3-panel w3-border w3-round-xxlarge w3-blue w3-cell w3-mobile">';
                     echo "<p><strong>$this->name</strong></p>";
@@ -65,6 +64,7 @@
                 public function set_level($level) {
                     if (is_numeric($level) && $level > 0 && $level < 101) {
                         $this->level = $level;
+                        $this->left_till_full_level = 100 - $level;
                         return true;
                     } else {
                         echo "<p>Invalid Level</p>";
@@ -84,8 +84,8 @@
             $current_pokemon = new Pokemon();
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if($current_pokemon->set_name($_POST["name"]) && $current_pokemon->set_type1($_POST["type1"]) && $current_pokemon->set_type2($_POST["type2"]) && $current_pokemon->set_level($_POST["level"])) {
-                    $current_pokemon->pokemon_id = $_POST["pokemon_id"];
+                if($current_pokemon->set_name($_POST["new-pokemon-name"]) && $current_pokemon->set_type1($_POST["new-pokemon-type1"]) && $current_pokemon->set_type2($_POST["new-pokemon-type2"]) && $current_pokemon->set_level($_POST["new-pokemon-level"])) {
+                    $current_pokemon->pokemon_id = $_POST["new-pokemon-id"];
                     $current_pokemon->add_to_team();
                     echo "<h1>Created Pokemon</h1>";
                     $current_pokemon->print_pokemon();

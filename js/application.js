@@ -14,7 +14,7 @@ Vue.createApp({
     data() {
         return {
             pokemonTypes: pokemonTypes,
-            pokemons: getPokemonFromCookie()
+            pokemonTeam: getPokemonFromCookie()
         }
     }
 }).mount('#vue-js-app')

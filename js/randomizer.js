@@ -5,7 +5,7 @@ var randomY = Math.floor(Math.random() * 101)
 
 async function fillFormWithName() {
   const url = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemonId
-  const pokemonNameInput = document.getElementById("name")
+  const pokemonNameInput = document.getElementById("new-pokemon-user-input-form-pokemon-name")
 
   const pokeApiResponse = await fetch(url)
   if (pokeApiResponse.ok) {
@@ -16,7 +16,7 @@ async function fillFormWithName() {
 }
 
 function showChosenPokemon() {
-  const randomizerCanvas = document.getElementById("randomizer")
+  const randomizerCanvas = document.getElementById("new-pokemon-randomizer-canvas")
   const randomizerCanvasPainter = randomizerCanvas.getContext("2d")
 
   const chosenPokemonImage = new Image;
@@ -47,7 +47,7 @@ function showChosenPokemon() {
 }
 
 function drawPokemonImage() {
-  const randomizerCanvas = document.getElementById("randomizer")
+  const randomizerCanvas = document.getElementById("new-pokemon-randomizer-canvas")
   const randomizerCanvasPainter = randomizerCanvas.getContext("2d")
   const pokemonImage = new Image;
 
@@ -64,7 +64,7 @@ function drawPokemonImage() {
 }
 
 function toggleRandomizerCanvas() {
-  const toggleRandomizerButton = document.getElementById("randomizer-button")
+  const toggleRandomizerButton = document.getElementById("new-pokemon-randomizer-canvas-toggle-button")
 
   if (toggleRandomizerButton.value == "Stop Pokemon Randomization"){
     active = false

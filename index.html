@@ -18,72 +18,75 @@
 
     <nav class="w3-bar">
       <a href="#information" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">How to Use</a>
-      <a href="#form" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Add a Pokemon</a>
-      <a href="#pokemonTeam" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Pokemon Team</a>
+      <a href="#new-pokemon" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Add a Pokemon</a>
+      <a href="#pokemon-team" class="w3-border w3-round-xlarge w3-bar-item w3-mobile">Pokemon Team</a>
     </nav>
 
     <section id="information" class="w3-container">
-      <img id="information_image" class="w3-image w3-hide-small" src="https://secure.static.tumblr.com/0e3b2e30312ca426d8a8f29a99e01aeb/ge4upkh/HMcmzna1m/tumblr_static_tumblr_static_tumblr_static_pokemon_banner.png" alt="Image for decoration. Showing some cute forms of famous pokemons">
+      <img id="information-image" class="w3-image w3-hide-small" src="https://secure.static.tumblr.com/0e3b2e30312ca426d8a8f29a99e01aeb/ge4upkh/HMcmzna1m/tumblr_static_tumblr_static_tumblr_static_pokemon_banner.png" alt="Image for decoration. Showing some cute forms of famous pokemons">
       <h2>How to Use</h2>
       <p>On this website, you can assamble your pokemon team. Fill out the form by typing the name of an existing Pokemon. If the pokemon does exists, the types are filled in automatically. You can also set the level of your pokemon.</p>
       <p>Alternatively you can generate a random Pokemon for your team. You still have to define its level by hand though.</p>
     </section>
 
-    <section id="form" class="w3-container w3-section">
+    <section id="new-pokemon" class="w3-container w3-section">
       <h2>Add a Pokemon to your Team</h2>
-      <section class="w3-container w3-section">
+      <section id="new-pokemon-randomizer" class="w3-container w3-section">
         <h3>Fill form with a random pokemon</h3>
-        <div id="randomizer-box" class="w3-content">
-        <canvas id="randomizer" width="296" height="196"></canvas>
-      </div>
-        <input name="toggle-pokemon-randomization" type="button" id="randomizer-button" class="w3-input w3-btn w3-round-xlarge w3-blue w3-margin-bottom" onclick="toggleRandomizerCanvas()" value="Start Pokemon Randomization">
+        <div id="new-pokemon-randomizer-div" class="w3-content">
+          <canvas id="new-pokemon-randomizer-canvas" width="296" height="196"></canvas>
+        </div>
+        <input id="new-pokemon-randomizer-canvas-toggle-button" name="new-pokemon-randomizer-canvas-toggle-button" type="button" class="w3-input w3-btn w3-round-xlarge w3-blue w3-margin-bottom" onclick="toggleRandomizerCanvas()" value="Start Pokemon Randomization">
       </section>
-      <section class="w3-halve w3-container w3-section">
+      <section id="new-pokemon-user-input" class="w3-halve w3-container w3-section">
         <h3>Fill out with your Pokemon's Information</h3>
-        <form action="server.php" method="POST" class="w3-container w3-light-grey">
-          <input type="hidden" id="pokemon_id" name="pokemon_id">
+        <form id="new-pokemon-user-input-form" action="server.php" method="POST" class="w3-container w3-light-grey">
+
+          <input id="new-pokemon-user-input-form-pokemon-id"  type="hidden" name="new-pokemon-id">
 
           <div class="w3-half w3-container w3-section">
-            <label for="name">Name:</label>
-            <span id="name-error" class="w3-red" hidden>Valid Pokemon Name Required</span>
-            <input class="w3-input w3-round-large" type="text" id="name" name="name" oninput="validatePokemonName()" required>
+            <label for="new-pokemon-user-input-form-pokemon-name">Name:</label>
+            <span id="new-pokemon-user-input-form-pokemon-name-error" class="w3-red" hidden>Valid Pokemon Name Required</span>
+            <input id="new-pokemon-user-input-form-pokemon-name" class="w3-input w3-round-large" type="text" name="new-pokemon-name" oninput="validatePokemonName()" required>
           </div>
 
           <div class="w3-half w3-container w3-section">
-            <label for="level">Level:</label>
-            <span id="level-error" hidden class="w3-red">Valid Pokemon Level Required</span>
-            <input class="w3-input w3-round-large" type="number" id="level" name="level" min="1" max="100" step="1" oninput="validatePokemonLevel()" required>
+            <label for="new-pokemon-user-input-form-pokemon-level">Level:</label>
+            <span id="new-pokemon-user-input-form-pokemon-level-error" hidden class="w3-red">Valid Pokemon Level Required</span>
+            <input id="new-pokemon-user-input-form-pokemon-level" class="w3-input w3-round-large" type="number" name="new-pokemon-level" min="1" max="100" step="1" oninput="validatePokemonLevel()" required>
           </div>
 
           <div class="w3-half w3-container w3-section">
-            <label for="type1">Typ 1:</label>
-            <select class="w3-input w3-round-large" name="type1" id="type1" required>
+            <label for="new-pokemon-user-input-form-pokemon-type1">Typ 1:</label>
+            <select id="new-pokemon-user-input-form-pokemon-type1" class="w3-input w3-round-large" name="new-pokemon-type1" required>
               <option v-for="type in pokemonTypes">{{ type }}</option>
             </select>
           </div>
 
           <div class="w3-half w3-container w3-section">
-            <label for="type2">Typ 2:</label>
-            <select class="w3-input w3-round-large" name="type2" id="type2" required>
+            <label for="new-pokemon-user-input-form-pokemon-type2">Typ 2:</label>
+            <select id="new-pokemon-user-input-form-pokemon-type2" class="w3-input w3-round-large" name="new-pokemon-type2" required>
               <option>none</option>
               <option v-for="type in pokemonTypes">{{ type }}</option>
             </select>
           </div>
 
           <div class="w3-container w3-section">
-            <input onclick="showPokemonFormErrors()" name="send" class="w3-input w3-btn w3-round-xlarge w3-blue" type="submit" value="Absenden">
+            <input id="new-pokemon-user-input-form-pokemon-submit" onclick="showPokemonFormErrors()" name="new-pokemon-submit" class="w3-input w3-btn w3-round-xlarge w3-blue" type="submit" value="Absenden">
           </div>
+
         </form>
       </section>
     </section>
 
-    <section id="pokemonTeam" class="w3-container">
+    <section id="pokemon-team" class="w3-container">
       <h2>Your Pokemon Team</h2>
-      <article class="w3-third w3-panel w3-border w3-round-xxlarge w3-blue w3-cell" v-for="pokemon in pokemons">
+      <article class="w3-third w3-panel w3-border w3-round-xxlarge w3-blue w3-cell" v-for="pokemon in pokemonTeam">
         <img :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.pokemon_id + '.png'" :alt="'Picture of ' + pokemon.name">
         <h4>{{ pokemon.name }}</h4>
         <p>Level: {{ pokemon.level }}</p>
         <p>Types: {{ pokemon.type1 }}, {{ pokemon.type2 }}</p>
+        <p><strong>{{ pokemon.left_till_full_level }} Levels to go!</strong></p>
       </article>
     </section>
     <script src="js/application.js"></script>

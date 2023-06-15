@@ -1,10 +1,10 @@
 var relevantRequestId = 0;
 
 function showPokemonFormErrors() {
-  const pokemonLevelInput = document.getElementById("level")
-  const pokemonLevelError = document.getElementById("level-error")
-  const pokemonNameInput = document.getElementById("name")
-  const pokemonNameError = document.getElementById("name-error")
+  const pokemonLevelInput = document.getElementById("new-pokemon-user-input-form-pokemon-level")
+  const pokemonLevelError = document.getElementById("new-pokemon-user-input-form-pokemon-level-error")
+  const pokemonNameInput = document.getElementById("new-pokemon-user-input-form-pokemon-name")
+  const pokemonNameError = document.getElementById("new-pokemon-user-input-form-pokemon-name-error")
 
   if (! pokemonLevelInput.checkValidity()){
     pokemonLevelError.hidden = false
@@ -16,8 +16,8 @@ function showPokemonFormErrors() {
 }
 
 function validatePokemonLevel() {
-  const pokemonLevelInput = document.getElementById("level")
-  const pokemonLevelError = document.getElementById("level-error")
+  const pokemonLevelInput = document.getElementById("new-pokemon-user-input-form-pokemon-level")
+  const pokemonLevelError = document.getElementById("new-pokemon-user-input-form-pokemon-level-error")
 
   if (pokemonLevelInput.value > 0 && pokemonLevelInput.value < 101) {
     pokemonLevelInput.style.backgroundColor = "green"
@@ -28,11 +28,11 @@ function validatePokemonLevel() {
 }
 
 async function fillFormWithValidPokemonData(pokemonJSON) {
-  const pokemonNameInput = document.getElementById("name")
-  const pokemonNameError = document.getElementById("name-error")
-  const pokemonType1Dropdown = document.getElementById("type1")
-  const pokemonType2Dropdown = document.getElementById("type2")
-  const pokemonIdInput = document.getElementById("pokemon_id")
+  const pokemonNameInput = document.getElementById("new-pokemon-user-input-form-pokemon-name")
+  const pokemonNameError = document.getElementById("new-pokemon-user-input-form-pokemon-name-error")
+  const pokemonType1Dropdown = document.getElementById("new-pokemon-user-input-form-pokemon-type1")
+  const pokemonType2Dropdown = document.getElementById("new-pokemon-user-input-form-pokemon-type2")
+  const pokemonIdInput = document.getElementById("new-pokemon-user-input-form-pokemon-id")
 
   pokemonNameInput.style.backgroundColor = "green"
   pokemonIdInput.value = pokemonJSON.id
@@ -43,7 +43,7 @@ async function fillFormWithValidPokemonData(pokemonJSON) {
 }
 
 function showPokemonInvalidity() {
-  const pokemonNameInput = document.getElementById("name")
+  const pokemonNameInput = document.getElementById("new-pokemon-user-input-form-pokemon-name")
   pokemonNameInput.style.backgroundColor = "red"
   pokemonNameInput.setCustomValidity("This Pokemon does not exist")
 }
@@ -62,7 +62,7 @@ async function loadPokemonByName(requestId, pokemonName) {
 }
 
 function validatePokemonName() {
-  const pokemonNameInput = document.getElementById("name")
+  const pokemonNameInput = document.getElementById("new-pokemon-user-input-form-pokemon-name")
 
   if (pokemonNameInput.value == ""){
     pokemonNameInput.setCustomValidity("Pokemon name must not be empty")
