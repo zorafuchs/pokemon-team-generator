@@ -1,62 +1,74 @@
-var counter = 0;
+var relevantRequestId = 0;
 
-function showError() {
-  level = document.getElementById("level");
-  levelError = document.getElementById("level-error")
-  input = document.getElementById("name");
-  inputError = document.getElementById("name-error")
-  if (! level.checkValidity()){
-    levelError.hidden = false;
+function showPokemonFormErrors() {
+  const pokemonLevelInput = document.getElementById("level");
+  const pokemonLevelError = document.getElementById("level-error")
+  const pokemonNameInput = document.getElementById("name");
+  const pokemonNameError = document.getElementById("name-error")
+
+  if (! pokemonLevelInput.checkValidity()){
+    pokemonLevelError.hidden = false;
   }
 
-  if (! input.checkValidity() || name.value == ""){
-    inputError.hidden = false;
+  if (! pokemonNameInput.checkValidity() || name.value == ""){
+    pokemonNameError.hidden = false;
   }
 }
 
-function validateLevel() {
-  level = document.getElementById("level")
-  levelError = document.getElementById("level-error")
-  if (level.value > 0 && level.value < 101) {
-    level.style.backgroundColor = "green";
-    levelError.hidden = true
+function validatePokemonLevel() {
+  const pokemonLevelInput = document.getElementById("level")
+  const pokemonLevelError = document.getElementById("level-error")
+
+  if (pokemonLevelInput.value > 0 && pokemonLevelInput.value < 101) {
+    pokemonLevelInput.style.backgroundColor = "green";
+    pokemonLevelError.hidden = true
   } else {
-    level.style.backgroundColor = "red";
+    pokemonLevelInput.style.backgroundColor = "red";
   }
 }
 
-async function loadGivenPokemon(localCounter) {
-  input = document.getElementById("name")
-  inputError = document.getElementById("name-error")
-  type1 = document.getElementById("type1")
-  type2 = document.getElementById("type2")
-  pokemon_id = document.getElementById("pokemon_id")
-  console.log(input.value)
-  var url = 'https://pokeapi.co/api/v2/pokemon/' + input.value.toLowerCase();
+async function fillFormWithValidPokemonData(pokemonJSON) {
+  const pokemonNameInput = document.getElementById("name")
+  const pokemonNameError = document.getElementById("name-error")
+  const pokemonType1Dropdown = document.getElementById("type1")
+  const pokemonType2Dropdown = document.getElementById("type2")
+  const pokemonIdInput = document.getElementById("pokemon_id")
 
-  const response = await fetch(url)
-  console.log(response)
-  if (response.ok && localCounter == counter) {
-    const data = await response.json();
-    input.style.backgroundColor = "green";
-    pokemon_id.value = data.id
-    type1.value = data.types[0].type.name
-    if (data.types.length > 1){ type2.value = data.types[1].type.name } else {type2.value = "none"}
-    input.setCustomValidity("");
-    inputError.hidden = true
-  } else if (localCounter == counter) {
-    input.style.backgroundColor = "red";
-    input.setCustomValidity("This Pokemon does not exist");
+  pokemonNameInput.style.backgroundColor = "green"
+  pokemonIdInput.value = pokemonJSON.id
+  pokemonType1Dropdown.value = pokemonJSON.types[0].type.name
+  if (pokemonJSON.types.length > 1) { pokemonType2Dropdown.value = pokemonJSON.types[1].type.name } else { pokemonType2Dropdown.value = "none" }
+  pokemonNameInput.setCustomValidity("")
+  pokemonNameError.hidden = true
+}
+
+function showPokemonInvalidity() {
+  const pokemonNameInput = document.getElementById("name")
+  pokemonNameInput.style.backgroundColor = "red"
+  pokemonNameInput.setCustomValidity("This Pokemon does not exist")
+}
+
+
+async function loadPokemonByName(requestId, pokemonName) {
+  const pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase();
+
+  const pokeApiRequest = await fetch(pokemonUrl)
+  if (pokeApiRequest.ok && requestId == relevantRequestId) {
+    const pokemonData = await pokeApiRequest.json()
+    fillFormWithValidPokemonData(pokemonData)
+  } else if (requestId == relevantRequestId) {
+    showPokemonInvalidity()
   }
 }
 
-function validateName() {
-  input = document.getElementById("name")
-  if (input.value == ""){
-    input.setCustomValidity("Pokemon name must not be empty");
+function validatePokemonName() {
+  const pokemonNameInput = document.getElementById("name")
+
+  if (pokemonNameInput.value == ""){
+    pokemonNameInput.setCustomValidity("Pokemon name must not be empty");
   } else{
- counter++;
-  var localCounter = counter
-  loadGivenPokemon(localCounter)
+    relevantRequestId++
+    const requestId = relevantRequestId
+    loadPokemonByName(requestId, pokemonNameInput.value)
   }
 }

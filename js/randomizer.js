@@ -11,7 +11,7 @@ async function fillFormWithName() {
     const pokemonData = await pokeApiResponse.json()
     var pokemonNameInput = document.getElementById("name")
     pokemonNameInput.value = pokemonData.name
-    validateName()
+    validatePokemonName()
   }
 }
 
