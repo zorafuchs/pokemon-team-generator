@@ -1,79 +1,80 @@
-var active = true;
-var random_pokemon=Math.floor(Math.random() * 1009);
-var random_x=Math.floor(Math.random() * 201);
-var random_y=Math.floor(Math.random() * 101);
+var active = true
+var randomPokemonId = Math.floor(Math.random() * 1009)
+var randomX = Math.floor(Math.random() * 201)
+var randomY = Math.floor(Math.random() * 101)
 
-async function get_name() {
-    var url = 'https://pokeapi.co/api/v2/pokemon/' + random_pokemon;
+async function fillFormWithName() {
+  var url = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemonId
 
-    const response = await fetch(url)
-    if (response.ok) {
-      const data = await response.json()
-      var input = document.getElementById("name")
-      input.value = data.name
-      validateName()
-    }
+  const pokeApiResponse = await fetch(url)
+  if (pokeApiResponse.ok) {
+    const pokemonData = await pokeApiResponse.json()
+    var pokemonNameInput = document.getElementById("name")
+    pokemonNameInput.value = pokemonData.name
+    validateName()
+  }
 }
 
-function show_chosen_pokemon() {
-    
-        var canvas = document.getElementById("randomizer");
-        var painter = canvas.getContext("2d");
-        painter.strokeStyle = "red";
-        painter.clearRect(0, 0, 296, 196);
-        painter.beginPath();
-        painter.moveTo(random_x, random_y);
-        painter.lineTo(random_x+96, random_y);
-        painter.stroke();
-        painter.beginPath();
-        painter.moveTo(random_x+96, random_y);
-        painter.lineTo(random_x+96, random_y+96);
-        painter.stroke();
-        painter.beginPath();
-        painter.moveTo(random_x+96, random_y+96);
-        painter.lineTo(random_x, random_y+96);
-        painter.stroke();
-        painter.beginPath();
-        painter.moveTo(random_x, random_y+96);
-        painter.lineTo(random_x, random_y);
-        painter.stroke();
-        var image = new Image;
+function showChosenPokemon() {
+  var randomizerCanvas = document.getElementById("randomizer");
+  var randomizerCanvasPainter = randomizerCanvas.getContext("2d");
 
-        image.onload = function(){
-            painter.drawImage(image, random_x, random_y);
-            get_name();  
-        }
-        image.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + random_pokemon + '.png';
+  randomizerCanvasPainter.strokeStyle = "red";
+  randomizerCanvasPainter.clearRect(0, 0, 296, 196);
+  randomizerCanvasPainter.beginPath();
+  randomizerCanvasPainter.moveTo(randomX, randomY);
+  randomizerCanvasPainter.lineTo(randomX+96, randomY);
+  randomizerCanvasPainter.stroke();
+  randomizerCanvasPainter.beginPath();
+  randomizerCanvasPainter.moveTo(randomX+96, randomY);
+  randomizerCanvasPainter.lineTo(randomX+96, randomY+96);
+  randomizerCanvasPainter.stroke();
+  randomizerCanvasPainter.beginPath();
+  randomizerCanvasPainter.moveTo(randomX+96, randomY+96);
+  randomizerCanvasPainter.lineTo(randomX, randomY+96);
+  randomizerCanvasPainter.stroke();
+  randomizerCanvasPainter.beginPath();
+  randomizerCanvasPainter.moveTo(randomX, randomY+96);
+  randomizerCanvasPainter.lineTo(randomX, randomY);
+  randomizerCanvasPainter.stroke();
+
+  var chosenPokemonImage = new Image;
+
+  chosenPokemonImage.onload = function(){
+    randomizerCanvasPainter.drawImage(chosenPokemonImage, randomX, randomY);
+    fillFormWithName();  
+  }
+  chosenPokemonImage.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + randomPokemonId + '.png';
+}
+
+function drawPokemonImage() {
+  randomPokemonId = Math.floor(Math.random() * 1009)
+  randomX=Math.floor(Math.random() * 201);
+  randomY=Math.floor(Math.random() * 101);
+
+  var randomizerCanvas = document.getElementById("randomizer");
+  var randomizerCanvasPainter = randomizerCanvas.getContext("2d");
+  var pokemonImage = new Image;
+
+  pokemonImage.onload = async function(){
+    randomizerCanvasPainter.drawImage(pokemonImage, randomX, randomY);
+    const waitPromise = new Promise((resolve) => { setTimeout(() => {resolve()}, 100); })
+    await waitPromise
+    if(active) { drawPokemonImage() }
+  }
+  pokemonImage.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + randomPokemonId + '.png';
 }
 
 function stopRoulette() {
-    var button = document.getElementById("randomizer-button");
-    console.log(button.value);
-    if (button.value == "Stop Pokemon Randomization"){
-        active = false;
-        button.value = "Start Pokemon Randomization";
-        show_chosen_pokemon()
-    } else if (button.value == "Start Pokemon Randomization"){
-        active = true;
-        button.value = "Stop Pokemon Randomization";
-        draw_image();
-    }
-}
-
-function draw_image() {
-    random_pokemon = Math.floor(Math.random() * 1009)
-    random_x=Math.floor(Math.random() * 201);
-    random_y=Math.floor(Math.random() * 101);
-
-    var canvas = document.getElementById("randomizer");
-    var painter = canvas.getContext("2d");
-    var image = new Image;
-
-    image.onload = async function(){
-        painter.drawImage(image, random_x, random_y);
-        const waitPromise = new Promise((resolve) => { setTimeout(() => {resolve()}, 100); })
-        await waitPromise
-        if(active){draw_image()}
-    }
-    image.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + random_pokemon + '.png';
+  var button = document.getElementById("randomizer-button");
+  console.log(button.value);
+  if (button.value == "Stop Pokemon Randomization"){
+    active = false;
+    button.value = "Start Pokemon Randomization";
+    showChosenPokemon()
+  } else if (button.value == "Start Pokemon Randomization"){
+    active = true;
+    button.value = "Stop Pokemon Randomization";
+    drawPokemonImage();
+  }
 }
