@@ -5,9 +5,9 @@ const pokemonTypes = [
 ]
 
 function getPokemonFromCookie() {
-    const pokemonCookie = decodeURIComponent(document.cookie.split('; ').find(row => row.startsWith('pokemon_team=')));
-    const pokemonCookieValue = pokemonCookie ? pokemonCookie.split('=')[1] : "";
-    return pokemonCookieValue ? JSON.parse("[" + pokemonCookieValue + "]") : [];
+    const pokemonCookie = decodeURIComponent(document.cookie.split('; ').find(row => row.startsWith('pokemon_team=')))
+    const pokemonCookieValue = pokemonCookie ? pokemonCookie.split('=')[1] : ""
+    return pokemonCookieValue ? JSON.parse("[" + pokemonCookieValue + "]") : []
 }
 
 Vue.createApp({
@@ -17,4 +17,4 @@ Vue.createApp({
             pokemons: getPokemonFromCookie()
         }
     }
-}).mount('#vue-js-app');
+}).mount('#vue-js-app')
