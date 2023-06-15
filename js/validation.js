@@ -1,17 +1,17 @@
 var relevantRequestId = 0;
 
 function showPokemonFormErrors() {
-  const pokemonLevelInput = document.getElementById("level");
+  const pokemonLevelInput = document.getElementById("level")
   const pokemonLevelError = document.getElementById("level-error")
-  const pokemonNameInput = document.getElementById("name");
+  const pokemonNameInput = document.getElementById("name")
   const pokemonNameError = document.getElementById("name-error")
 
   if (! pokemonLevelInput.checkValidity()){
-    pokemonLevelError.hidden = false;
+    pokemonLevelError.hidden = false
   }
 
   if (! pokemonNameInput.checkValidity() || name.value == ""){
-    pokemonNameError.hidden = false;
+    pokemonNameError.hidden = false
   }
 }
 
@@ -20,10 +20,10 @@ function validatePokemonLevel() {
   const pokemonLevelError = document.getElementById("level-error")
 
   if (pokemonLevelInput.value > 0 && pokemonLevelInput.value < 101) {
-    pokemonLevelInput.style.backgroundColor = "green";
+    pokemonLevelInput.style.backgroundColor = "green"
     pokemonLevelError.hidden = true
   } else {
-    pokemonLevelInput.style.backgroundColor = "red";
+    pokemonLevelInput.style.backgroundColor = "red"
   }
 }
 
@@ -50,7 +50,7 @@ function showPokemonInvalidity() {
 
 
 async function loadPokemonByName(requestId, pokemonName) {
-  const pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase();
+  const pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemonName.toLowerCase()
 
   const pokeApiRequest = await fetch(pokemonUrl)
   if (pokeApiRequest.ok && requestId == relevantRequestId) {
@@ -65,7 +65,7 @@ function validatePokemonName() {
   const pokemonNameInput = document.getElementById("name")
 
   if (pokemonNameInput.value == ""){
-    pokemonNameInput.setCustomValidity("Pokemon name must not be empty");
+    pokemonNameInput.setCustomValidity("Pokemon name must not be empty")
   } else{
     relevantRequestId++
     const requestId = relevantRequestId
